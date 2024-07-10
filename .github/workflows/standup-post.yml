@@ -1,0 +1,17 @@
+name: Standup Post
+
+on:
+  schedule:
+    - cron: '0 2 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  post_standup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Send Standup Post to Discord
+        run: ./send-standup.sh ${{ secrets.DISCORD_WEBHOOK_URL }} ${{ secrets.IMAGE_URL }}
