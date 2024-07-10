@@ -20,36 +20,10 @@ This repository contains a GitHub Action that posts a standup update to a Discor
    - Navigate to `Settings` > `Secrets and variables` > `Actions`.
    - Add two new repository secrets:
      - `DISCORD_WEBHOOK_URL`: Paste your Discord webhook URL.
-     - `IMAGE_URL`: Paste the URL of the image you want to include in the standup post.
+     - `IMAGE_URL`: Paste the URL of the bot avatar.
 
 2. **Add the Shell Script**:
-   - Create a file named `send-standup.sh` at the root of your repository with the following content:
-
-     ```sh
-     #!/bin/bash
-
-     WEBHOOK_URL=$1
-     IMAGE_URL=$2
-
-     DATE=$(date +"%A %d/%m")
-
-     curl -H "Content-Type: application/json" \
-          -X POST \
-          -d '{
-            "content": "@everyone",
-            "embeds": [
-              {
-                "title": "Async Standup",
-                "description": "**Date: '"$DATE"'**\n\n**What did you do since last meeting/standup?**\n[Describe the tasks or goals you accomplished.]\n\n**What are you planning to do today?**\n[Outline the tasks or goals you plan to work on today.]\n\n**Are there any blockers or impediments?**\n[Mention any obstacles that are preventing you from completing your tasks.]\n\n**Additional Notes/Comments:**\n[Any additional information or updates you want to share with the team.]",
-                "color": 5814783,
-                "image": {
-                  "url": "'"$IMAGE_URL"'"
-                }
-              }
-            ]
-          }' \
-          "$WEBHOOK_URL"
-     ```
+   - Create a file named `send-standup.sh` at the root of your repository with the following content.
 
    - Make sure the script is executable. You can do this by running the following command in your terminal:
 
@@ -58,30 +32,7 @@ This repository contains a GitHub Action that posts a standup update to a Discor
      ```
 
 3. **Add the GitHub Action Workflow**:
-   - Create a file named `standup-post.yml` in the `.github/workflows` directory of your repository with the following content:
-
-     ```yaml
-     name: Standup Post
-
-     on:
-       schedule:
-         - cron: '0 2 */3 * *' # This cron schedule runs at 2 AM UTC every three days
-       workflow_dispatch: # Allows manual triggering of the workflow
-
-     jobs:
-       post_standup:
-         runs-on: ubuntu-latest
-
-         steps:
-           - name: Checkout code
-             uses: actions/checkout@v2
-
-           - name: Make script executable
-             run: chmod +x ./send-standup.sh
-
-           - name: Send Standup Post to Discord
-             run: ./send-standup.sh ${{ secrets.DISCORD_WEBHOOK_URL }} ${{ secrets.IMAGE_URL }}
-     ```
+   - Create a file named `standup-post.yml` in the `.github/workflows` directory of your repository with the following content.
 
 ### Usage
 
