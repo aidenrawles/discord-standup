@@ -17,4 +17,4 @@ jobs:
         run: chmod +x send-standup.sh
 
       - name: Send Standup Post to Discord
-        run: ./send-standup.sh ${{ secrets.DISCORD_WEBHOOK_URL }} ${{ secrets.IMAGE_URL }}
+        run: ./send-standup.sh ${{ secrets.DISCORD_WEBHOOK_URL }} ${{ secrets.IMAGE_URL }} ${{ secrets.USERNAME }}
