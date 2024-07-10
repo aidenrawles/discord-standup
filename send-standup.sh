@@ -2,14 +2,13 @@
 
 WEBHOOK_URL=$1
 IMAGE_URL=$2
-USERNAME=$3
 DATE=$(date +"%A %d/%m")
 
 curl -H "Content-Type: application/json" \
      -X POST \
      -d '{
        "content": "@everyone",
-       "username": "'"$USERNAME"'",
+       "username": "CapStoner Standups",
        "avatar_url": "'"$IMAGE_URL"'", 
        "embeds": [
          {
